@@ -1,0 +1,14 @@
+{
+        "builds": [
+        {
+            "src": "Vidhusha/wsgi.py",
+            "use": "@vercel/python"
+            }
+        ],
+        "routes": [
+        {
+        "src": "/(.*)",
+        "dest": "Vidhusha/wsgi.py"
+        }
+        ]
+    }
