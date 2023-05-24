@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load post_utils % }
+
+
+{% block title %} - {{ post.title}} {% endblock title %}
+
+{% block content %}
+
+<div class="row tm-row">
+  <div class="col-12">
+    <hr class="tm-hr-primary tm-mb-55" />
+    <img src="{{ post.image.url}}" class="rounded" alt="{{post.title}}" />
+  </div>
+</div>
+
+<div class="row tm-row">
+
+  <div class="col-lg-8 tm-post-col">
+    <div class="tm-post-full" >
+      <div class="mb-4">
+        <h2 class="pt-2 tm-color-primary tm-post-title">{{ post.title }}</h2>
+        <p class="tm-mb-40">{{ post.publish.date }} by {{ post.creator }}</p>
+        <p class="tm-mb-40">{{ post.get_readtime }}</p>
+        
+
+        <p>
+          {{ post.body|safe }}
+        </p>
+        <strong>Tags:</strong>
+        {% for tag in post.tags.all %}
+        <a href="{% url 'blog:post_tag' tag.slug %}">
+        <span class="d-block text-right tm-color-primary">{{tag.name}}</span>
+        </a>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+  
+  <aside class="col-lg-4 tm-aside-col">
+    <div class="tm-post-sidebar">
+      <hr class="mb-3 tm-hr-primary" />
+      <!-- <h2 class="mb-4 tm-post-title tm-color-primary">Categories</h2>
+      <ul class="tm-mb-75 pl-5 tm-category-list">
+        <li><a href="#" class="tm-color-primary">Visual Designs</a></li>
+        <li><a href="#" class="tm-color-primary">Travel Events</a></li>
+        <li><a href="#" class="tm-color-primary">Web Development</a></li>
+        <li><a href="#" class="tm-color-primary">Video and Audio</a></li>
+        <li><a href="#" class="tm-color-primary">Etiam auctor ac arcu</a></li>
+        <li><a href="#" class="tm-color-primary">Sed im justo diam</a></li>
+      </ul>
+      <hr class="mb-3 tm-hr-primary" /> -->
+      <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts({{similar_posts.count}})</h2>
+
+      {% for post in similar_posts %}
+      <a href="{{post.get_absolute_url}}" class="d-block tm-mb-40">
+        <figure>
+          <img src="{{post.image.url}}" alt="Image" class="mb-3 img-fluid" />
+          <figcaption class="tm-color-primary">
+            {{post.title}}
+          </figcaption>
+        </figure>
+      </a>
+      {% empty %}
+      <p class="text-muted">There is no similar post yet</p>
+      {% endfor %}
+      
+    </div>
+  </aside>
+</div>
+{% endblock content %}
